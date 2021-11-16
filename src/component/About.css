@@ -1,0 +1,38 @@
+.about {
+  min-height: 90vh;
+  padding-top: 30px;
+}
+
+.about__top {
+  display: flex;
+  background-color: #f3f3f3;
+}
+
+.about__top--left {
+  flex: 0.6;
+}
+.about__top--right {
+  flex: 0.4;
+  padding: 30px;
+}
+
+.about__top--right > h3 {
+  font-size: x-large;
+  padding: 5px;
+  text-transform: uppercase;
+  color: #5577d2;
+  border: 3px solid #5577d2;
+  display: inline-block;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.about__top--right > p {
+    line-height: 1.5;
+    padding: 36px 0;
+}
+.about__top--left > img {
+  width: 70%;
+  height: 90%;
+  object-fit: contain;
+}
