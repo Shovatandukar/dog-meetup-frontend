@@ -3,17 +3,7 @@ import './Login.css';
 import PropTypes from 'prop-types';
 import useToken from "../useToken";
 import { Link, Redirect, useHistory  } from 'react-router-dom';
-
-async function loginUser(credentials) {
- return fetch(' http://127.0.0.1:8000/api/v1/auth/token/', {
-   method: 'POST',
-   headers: {
-     'Content-Type': 'application/json'
-   },
-   body: JSON.stringify(credentials)
- })
-   .then(data => data.json())
-}
+import axiosInstance from "../Axios";
 
 export default function Login() {
   const { token, setToken } = useToken();
@@ -22,12 +12,15 @@ export default function Login() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await loginUser({
-      username,
-      password
+    axiosInstance
+        .post('auth/token/', {username,password}
+        ).then((res) => {
+          console.log(res.data);
+          localStorage.setItem('access_token',res.data.access);
+          localStorage.setItem('refresh_token',res.data.refresh);
+          axiosInstance.defaults.headers['Authorization'] = localStorage.getItem('access_token');
+          history.push('/')
     });
-    setToken(token);
-    history.push("/");
   }
 
   const history = useHistory();

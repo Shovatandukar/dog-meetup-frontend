@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Register.css";
 import imgRegister from "../img/About.jpg";
 import MapboxAutocomplete from "react-mapbox-autocomplete";
-//import { register } from "../redux/apiCalls";
+import axiosInstance from "../Axios";
 import { useHistory } from 'react-router-dom';
 //import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
@@ -15,20 +15,16 @@ import validator from "validator";
 
 function Register() {
   const history = useHistory();
-  //const dispatch = useDispatch();
- // const newUser = useSelector((state) => state.register);
 
   async function registerUser(userDetails) {
- return fetch('http://127.0.0.1:8000/api/v1/owners/', {
-   method: 'POST',
-   headers: {
-     'Content-Type': 'application/json',
-     'Authorization': 'Basic U2hvdmE6U2hvdmExMjM='
-   },
-   body: JSON.stringify(userDetails)
- })
-   .then(data => data.json())
-}
+    console.log(JSON.stringify(userDetails));
+    axiosInstance
+        .post('auth/register/', JSON.stringify(userDetails)
+        ).then((res) => {
+      history.push('./login')
+    });
+  }
+
   const getAddress = (result, lat, lng, text) => {
     setAddress(result);
     setLat(lat);
@@ -38,11 +34,9 @@ function Register() {
   const [username, setUsername] = useState("");
   const [first_name, setFname] = useState("");
   const [last_name, setLname] = useState("");
-  const [gender, setGender] = useState("male");
-  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password2, setConfirmPassword] = useState("");
   const [address, setAddress] = useState("");
   const [lat, setLat] = useState(0);
   const [long, setLong] = useState(0);
@@ -86,21 +80,20 @@ function Register() {
     } else if (password === "") {
       setPasswordError(true);
       setPasswordErrorMessage("Please fill in this field.");
-    } else if (confirmPassword === "") {
+    } else if (password2 === "") {
       setConfirmPasswordError(true);
       setConfirmPasswordErrorMessage("Please fill in this field.");
-    } else if (password !== confirmPassword) {
+    } else if (password !== password2) {
       alert("Passwords don't match");
     } else {
       registerUser({
+        username,
         first_name,
         last_name,
-        address,
         email,
-        phone
+        password,
+        password2
       }).then(r => "success")
-
-
     }
   };
 
@@ -156,39 +149,6 @@ function Register() {
                 onFocus={() => (
                   setLastNameError(false), setLastNameErrorMessage("")
                 )}
-              />
-              <FormLabel component="legend">Gender</FormLabel>
-              <RadioGroup
-                row
-                aria-label="gender"
-                name="radio-buttons-group"
-                defaultValue="male"
-                onChange={(e) => setGender(e.target.value)}
-                className="RadioGroup"
-              >
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                />
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Female"
-                />
-                <FormControlLabel
-                  value="other"
-                  control={<Radio required={true} />}
-                  label="Other"
-                />
-              </RadioGroup>
-              <TextField
-                className="TextField"
-                fullWidth
-                label="Phone Number"
-                onChange={(e) => setPhone(e.target.value)}
-                type="number"
-                variant="outlined"
               />
 
               <TextField
