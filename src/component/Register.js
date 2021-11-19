@@ -4,13 +4,7 @@ import imgRegister from "../img/About.jpg";
 import MapboxAutocomplete from "react-mapbox-autocomplete";
 import axiosInstance from "../Axios";
 import { useHistory } from 'react-router-dom';
-//import { useDispatch, useSelector } from "react-redux";
-import { CircularProgress } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
 import validator from "validator";
 
 function Register() {
@@ -18,12 +12,21 @@ function Register() {
 
   async function registerUser(userDetails) {
     console.log(JSON.stringify(userDetails));
-    axiosInstance
-        .post('auth/register/', JSON.stringify(userDetails)
-        ).then((res) => {
+        await fetch("http://127.0.0.1:8000/api/v1/auth/register/", {
+        method: "POST",
+        body:(JSON.stringify(userDetails)),
+          headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+    },
+      })
+    //axiosInstance
+     //   .post('auth/register/', JSON.stringify(userDetails)
+     .then((res) => {
       history.push('./login')
-    });
-  }
+
+  })
+  };
 
   const getAddress = (result, lat, lng, text) => {
     setAddress(result);
@@ -32,8 +35,6 @@ function Register() {
   };
   //local state
   const [username, setUsername] = useState("");
-  const [first_name, setFname] = useState("");
-  const [last_name, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setConfirmPassword] = useState("");
@@ -43,12 +44,6 @@ function Register() {
 
   const [usernameError, setUsernameError] = useState(false);
   const [usernameErrorMessage, setUsernameErrorMessage] = useState("");
-
-  const [firstNameError, setFirstNameError] = useState(false);
-  const [firstNameErrorMessage, setFirstNameErrorMessage] = useState("");
-
-  const [lastNameError, setLastNameError] = useState(false);
-  const [lastNameErrorMessage, setLastNameErrorMessage] = useState("");
 
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
@@ -65,12 +60,6 @@ function Register() {
     if (username === "") {
       setUsernameError(true);
       setUsernameErrorMessage("Please fill in this field.");
-    } else if (first_name === "") {
-      setFirstNameError(true);
-      setFirstNameErrorMessage("Please fill in this field.");
-    } else if (last_name === "") {
-      setLastNameError(true);
-      setLastNameErrorMessage("Please fill in this field.");
     } else if (email === "") {
       setEmailError(true);
       setEmailErrorMessage("Please fill in this field.");
@@ -88,11 +77,9 @@ function Register() {
     } else {
       registerUser({
         username,
-        first_name,
-        last_name,
         email,
         password,
-        password2
+        password2,
       }).then(r => "success")
     }
   };
@@ -122,35 +109,6 @@ function Register() {
                   setUsernameError(false), setUsernameErrorMessage("")
                 )}
               />
-              <TextField
-                className="TextField"
-                error={firstNameError}
-                fullWidth
-                helperText={firstNameErrorMessage}
-                label="First Name"
-                onChange={(e) => setFname(e.target.value)}
-                required
-                type="text"
-                variant="outlined"
-                onFocus={() => (
-                  setFirstNameError(false), setFirstNameErrorMessage("")
-                )}
-              />
-              <TextField
-                className="TextField"
-                error={lastNameError}
-                fullWidth
-                helperText={lastNameErrorMessage}
-                label="Last Name"
-                onChange={(e) => setLname(e.target.value)}
-                required
-                type="text"
-                variant="outlined"
-                onFocus={() => (
-                  setLastNameError(false), setLastNameErrorMessage("")
-                )}
-              />
-
               <TextField
                 className="TextField"
                 error={emailError}

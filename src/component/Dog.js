@@ -4,6 +4,8 @@ import LoadingComponent from "./Loading";
 import React, { useEffect, useState } from 'react';
 import EditIcon from "@material-ui/icons/Edit";
 import Link from "@material-ui/core/Link";
+import NavProfile from "./NavProfile";
+import Nav from "./Nav";
 
 function Dog() {
 
@@ -24,6 +26,7 @@ function Dog() {
 	}, [setAppState]);
 	return (
 		<div className="App">
+			<NavProfile/>
 			<h1>Dogs</h1>
 			<Link
 				color="textPrimary"

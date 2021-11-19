@@ -6,7 +6,6 @@ import { Link, Redirect, useHistory  } from 'react-router-dom';
 import axiosInstance from "../Axios";
 
 export default function Login() {
-  const { token, setToken } = useToken();
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -20,6 +19,7 @@ export default function Login() {
           localStorage.setItem('refresh_token',res.data.refresh);
           axiosInstance.defaults.headers['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
           history.push('/')
+      window.location.reload(false);
     });
   }
 
@@ -43,8 +43,4 @@ export default function Login() {
       </form>
     </div>
   )
-}
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
 }

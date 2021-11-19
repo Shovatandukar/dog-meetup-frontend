@@ -19,6 +19,9 @@ import Event_Edit from "./component/Event_Edit"
 import Event_Create from "./component/Event_Create"
 import Dog_Edit from "./component/Dog_Edit"
 import Dog_Create from "./component/Dog_Create"
+import Profile from "./component/Profile"
+import Profile_Edit from "./component/Profile_Edit"
+import LogOut from "./component/LogOut"
 import useToken from './useToken';
 
 export default function App() {
@@ -57,6 +60,15 @@ export default function App() {
           </Route>
           <Route path="/EventCreate/">
             <Event_Create />
+          </Route>
+          <Route path="/Profile">
+            <Profile />
+          </Route>
+          <Route path="/LogOut">
+            <LogOut />
+          </Route>
+           <Route path="/ProfileEdit/:id">
+            <Profile_Edit />
           </Route>
           <Route path="/">
             <Home />
