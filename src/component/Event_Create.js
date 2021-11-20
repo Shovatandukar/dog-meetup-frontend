@@ -9,6 +9,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import DateTimePicker from "@material-ui/pickers/DateTimePicker";
+import MapboxAutocomplete from "react-mapbox-autocomplete";
+import Event from "./Event";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -32,6 +35,7 @@ export default function Event_Create() {
 		title: '',
 		activity: '',
 		location: '',
+		datetime: '',
 	});
 
 	const [formData, updateFormData] = useState(initialFormData);
@@ -49,6 +53,16 @@ export default function Event_Create() {
 			});
 		}
 	};
+
+	const getAddress = (result, lat, lng, text) => {
+    setAddress(result);
+    setLat(lat);
+    setLong(lng);
+  };
+	const [address, setAddress] = useState("");
+  	const [lat, setLat] = useState(0);
+  	const [long, setLong] = useState(0);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log(formData);
@@ -56,7 +70,10 @@ export default function Event_Create() {
 		axiosInstance.post('events/', {
 			title: formData.title,
 			activity: formData.activity,
-			location: formData.location,
+			location: address,
+			lat: lat,
+			lon : long,
+			datetime: formData.datetime,
 		}).then(
         (result) => {
          console.log(result.text);
@@ -100,7 +117,7 @@ export default function Event_Create() {
 								required
 								fullWidth
 								id="activity"
-								label="activity"
+								label="Activity"
 								name="activity"
 								autoComplete="activity"
 								value={formData.activity}
@@ -108,17 +125,14 @@ export default function Event_Create() {
 							/>
 						</Grid>
 						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="location"
-								label="location"
-								name="location"
-								autoComplete="location"
-								value={formData.location}
-								onChange={handleChange}
-							/>
+							 <label className="lblAddress">Address</label>
+							  <MapboxAutocomplete
+								publicKey="pk.eyJ1Ijoic2hvdmExMjMiLCJhIjoiY2t3MXU0NWJpYXg0eTJ1cTF3MWc3ejViMSJ9.iZhvyK2TxZbdqSiJaWk3Mw"
+								inputClass="form-control search"
+								onSuggestionSelect={getAddress}
+								country="nz"
+								resetSearch={false}
+							  />
 						</Grid>
 					</Grid>
 					<Button

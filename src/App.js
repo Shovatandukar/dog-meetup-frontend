@@ -22,7 +22,8 @@ import Dog_Create from "./component/Dog_Create"
 import Profile from "./component/Profile"
 import Profile_Edit from "./component/Profile_Edit"
 import LogOut from "./component/LogOut"
-import useToken from './useToken';
+import Footer from "./component/Footer"
+import PublicEvents from "./component/PublicEvents";
 
 export default function App() {
 
@@ -70,10 +71,14 @@ export default function App() {
            <Route path="/ProfileEdit/:id">
             <Profile_Edit />
           </Route>
+           <Route path="/PublicEvents">
+            <PublicEvents />
+          </Route>
           <Route path="/">
             <Home />
           </Route>
         </Switch>
+        <Footer ></Footer>
       </div>
     </Router>
   );

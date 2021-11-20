@@ -12,6 +12,7 @@ import axiosInstance from "../Axios";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import Link from '@material-ui/core/Link';
+import GoogleMap from './GoogleMap';
 
 const useStyles = makeStyles((theme) => ({
 	cardMedia: {
