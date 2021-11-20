@@ -48,6 +48,7 @@ const Events = (props) => {
 			<Container maxWidth="md" component="main">
 				<Grid container spacing={5} alignItems="flex-end">
 					{events.map((event) => {
+						console.log(event);
 						return (
 							<Grid item key={event.id} xs={12} md={4}>
 								<Card className={classes.card}>
@@ -71,7 +72,17 @@ const Events = (props) => {
 										</div>
 										<div>
 											<Typography color="textSecondary">
-												location:  {event.location}
+												Location:  {event.location}
+											</Typography>
+										</div>
+										<div>
+											<Typography color="textSecondary">
+												Dog Type:  {event.dogType}
+											</Typography>
+										</div>
+										<div>
+											<Typography color="textSecondary">
+												eventDate:  {event.eventDate}
 											</Typography>
 										</div>
 										<div>

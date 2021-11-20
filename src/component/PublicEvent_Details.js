@@ -13,14 +13,23 @@ import Link from '@material-ui/core/Link';
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMap from "./GoogleMap";
 
-async function subscribe(eventId) {
-    console.log(JSON.stringify(eventId));
-    //axiosInstance
-    //    .delete('events/' + eventId +'/'
-    //    ).then((res) => {
-    //    	console.log("Success");
-   //     	window.location.reload(false);
-    //});
+async function subscribe(event) {
+    console.log(JSON.stringify(event));
+    axiosInstance
+	    .put('events/' + event.id +'/',
+			{title: event.title,
+			activity: event.activity,
+			location: event.location,
+			lat: event.lat,
+			lon : event.lon,
+			eventDate: event.eventDate,
+			dogType: event.dogType,
+				attendees : event.attendees + ', ' + localStorage.getItem('current_user')
+			}
+       ).then((res) => {
+        	console.log("Success");
+      	//window.location.reload(false);
+    });
   }
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PublicEvent_Details = (props) => {
 	const history = useHistory();
-	const { events } = props;
+	const { events, homeAddress } = props;
 	const classes = useStyles();
 	console.log(events);
 	if (!events || events.length === 0) return <p>Can not find any Events, sorry</p>;
@@ -73,16 +82,30 @@ const PublicEvent_Details = (props) => {
 										</div>
 										<div>
 											<Typography color="textSecondary">
+												Suitable For:  {event.dogType}
+											</Typography>
+										</div>
+										<div>
+											<Typography color="textSecondary">
 												location:  {event.location}
 											</Typography>
 										</div>
 										<div>
-												<Link
-													color="textPrimary"
-													onClick={() => subscribe(event.id)}
-													className={classes.link}
-												>Going
-												</Link>
+											<Typography color="textSecondary">
+												location:  {event.eventDate}
+											</Typography>
+										</div>
+
+										<div>
+												<button className={'joinButton'}
+													onClick={() => subscribe(event)}
+												>Join
+												</button>
+											<div>
+											<Typography color="textSecondary">
+												Attendees:  {event.attendees }
+											</Typography>
+										</div>
 										</div>
 									</CardContent>
 								</Card>

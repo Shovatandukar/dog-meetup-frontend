@@ -79,13 +79,11 @@
   padding-top: 0;
   margin-bottom: 0.5rem;
 }
-
-.dogDetails > button {
+.registerButton {
   background-color: #1abc9c;
   border-radius: 5px;
   border: none;
   color: #fff;
-  font-size: large;
   height: 50px;
   width: 350px;
   margin-top: 1rem;
@@ -139,4 +137,8 @@
   margin: 0.25rem 0;
   padding-bottom: 0.5rem;
   text-align: center;
+}
+
+button:hover {
+  cursor: pointer;
 }

@@ -1,0 +1,51 @@
+form > button {
+  width: 250px;
+  height: 30px;
+  font-size: large;
+  color: #c6b231;
+  background-color: #bc1a53;
+  border-radius: 5px;
+  margin-top: 30px;
+  border: none;
+}
+form {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: #0177b7;
+}
+
+form > textarea {
+  height: 150px;
+  width: 100%;
+  font-size: 16px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+form > input {
+  width: 350px;
+  height: 30px;
+  font-size: 20px;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+
+form > button:hover {
+  cursor: pointer;
+}
+
+.joinButton {
+  background-color: #1abc9c;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  height: 50px;
+  width: 250px;
+  margin-top: 1rem;
+}

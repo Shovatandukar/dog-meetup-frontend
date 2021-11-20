@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import useToken from "../useToken";
 import { Link, Redirect, useHistory  } from 'react-router-dom';
 import axiosInstance from "../Axios";
+import './common.css'
 
 export default function Login() {
   const [username, setUserName] = useState();
@@ -17,6 +18,7 @@ export default function Login() {
           console.log(res.data);
           localStorage.setItem('access_token',res.data.access);
           localStorage.setItem('refresh_token',res.data.refresh);
+          localStorage.setItem('current_user',username);
           axiosInstance.defaults.headers['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
           history.push('/')
       window.location.reload(false);
@@ -37,9 +39,9 @@ export default function Login() {
           <p>Password</p>
           <input type="password" onChange={e => setPassword(e.target.value)} />
         </label>
-        <div>
+
           <button type="submit">Submit</button>
-        </div>
+
       </form>
     </div>
   )

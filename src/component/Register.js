@@ -12,7 +12,7 @@ function Register() {
 
   async function registerUser(userDetails) {
     console.log(JSON.stringify(userDetails));
-        await fetch("http://127.0.0.1:8000/api/v1/auth/register/", {
+        await fetch("https://dog-meetup-shova.herokuapp.com/api/v1/auth/register/", {
         method: "POST",
         body:(JSON.stringify(userDetails)),
           headers: {
@@ -28,19 +28,11 @@ function Register() {
   })
   };
 
-  const getAddress = (result, lat, lng, text) => {
-    setAddress(result);
-    setLat(lat);
-    setLong(lng);
-  };
   //local state
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setConfirmPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [lat, setLat] = useState(0);
-  const [long, setLong] = useState(0);
 
   const [usernameError, setUsernameError] = useState(false);
   const [usernameErrorMessage, setUsernameErrorMessage] = useState("");
@@ -159,17 +151,7 @@ function Register() {
                   setConfirmPasswordErrorMessage("")
                 )}
               />
-              <label className="lblAddress">Address</label>
-
-              <MapboxAutocomplete
-                publicKey="pk.eyJ1Ijoic2hvdmExMjMiLCJhIjoiY2t3MXU0NWJpYXg0eTJ1cTF3MWc3ejViMSJ9.iZhvyK2TxZbdqSiJaWk3Mw"
-                inputClass="form-control search"
-                onSuggestionSelect={getAddress}
-                country="nz"
-                resetSearch={false}
-              />
-
-              <button type="submit">
+              <button className={'registerButton'} type="submit">
                 {
                   "Sign up"
                 }

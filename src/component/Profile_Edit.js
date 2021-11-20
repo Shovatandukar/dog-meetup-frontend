@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import MapboxAutocomplete from "react-mapbox-autocomplete";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -41,6 +42,16 @@ export default function Profile_Edit() {
 
 	const [formData, updateFormData] = useState(initialFormData);
 
+	const getAddress = (result, lat, long, text) => {
+    setAddress(result);
+    setLat(lat);
+    setLong(long);
+  };
+	const [address, setAddress] = useState("");
+  	const [lat, setLat] = useState(0);
+  	const [long, setLong] = useState(0);
+
+
 	useEffect(() => {
 		axiosInstance.get('owners/' + id +'/').then((res) => {
 			updateFormData({
@@ -70,8 +81,13 @@ export default function Profile_Edit() {
 		if (id == null || id == 'undefined') {
 
 			axiosInstance.post('owners/', {
-				address: formData.address,
+				address: address,
 				phone: formData.phone,
+				first_name: formData.first_name,
+				last_name : formData.last_name,
+				email: formData.email,
+				lat: lat,
+				lon: long
 			}).then(
 				(result) => {
 					console.log(result);
@@ -89,11 +105,13 @@ export default function Profile_Edit() {
 
 			axiosInstance.put('owners/' + id + '/', {
 				user: formData.user,
-				address: formData.address,
+				address: address,
 				phone: formData.phone,
 				first_name: formData.first_name,
 				last_name: formData.last_name,
-				email: formData.email
+				email: formData.email,
+				lat: lat,
+				lon: long
 			}).then(
 				(result) => {
 					console.log(result);
@@ -157,6 +175,16 @@ export default function Profile_Edit() {
 								value={formData.email}
 								onChange={handleChange}
 							/>
+						</Grid>
+						<Grid item xs={12}>
+							 <label className="lblAddress">Address</label>
+							  <MapboxAutocomplete
+								publicKey="pk.eyJ1Ijoic2hvdmExMjMiLCJhIjoiY2t3MXU0NWJpYXg0eTJ1cTF3MWc3ejViMSJ9.iZhvyK2TxZbdqSiJaWk3Mw"
+								inputClass="form-control search"
+								onSuggestionSelect={getAddress}
+								country="nz"
+								resetSearch={false}
+							  />
 						</Grid>
 						<Grid item xs={12}>
 							<TextField

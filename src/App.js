@@ -24,11 +24,13 @@ import Profile_Edit from "./component/Profile_Edit"
 import LogOut from "./component/LogOut"
 import Footer from "./component/Footer"
 import PublicEvents from "./component/PublicEvents";
+import './App.css'
 
 export default function App() {
 
   return (
     <Router>
+
       <div>
         <Nav ></Nav>
         <Switch>
@@ -79,6 +81,9 @@ export default function App() {
           </Route>
         </Switch>
         <Footer ></Footer>
+
+
+
       </div>
     </Router>
   );

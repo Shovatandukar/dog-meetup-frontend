@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MapboxAutocomplete from "react-mapbox-autocomplete";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -46,7 +48,10 @@ export default function Event_Edit() {
 				['title']: res.data.title,
 				['activity']: res.data.activity,
 				['location']: res.data.location,
+				['dogType']: res.data.dogType,
 			});
+			getAddress(res.data.location,res.data.lat,res.data.long);
+			//setDate(res.data.eventDate);
 			console.log(res.data);
 		});
 	}, [updateFormData]);
@@ -65,7 +70,8 @@ export default function Event_Edit() {
   };
 	const [address, setAddress] = useState("");
   	const [lat, setLat] = useState(0);
-  	const [long, setLong] = useState(0);
+  	const [lng, setLong] = useState(0);
+  	const [date, setDate] = useState(new Date());
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -76,8 +82,9 @@ export default function Event_Edit() {
 			activity: formData.activity,
 			location: address,
 			lat: lat,
-			lon : long,
-			datetime: formData.datetime,
+			lon : lng,
+			eventDate: date,
+			dogType: formData.dogType,
 		}).then(
         (result) => {
          console.log(result);
@@ -115,6 +122,10 @@ export default function Event_Edit() {
 								onChange={handleChange}
 							/>
 						</Grid>
+						<Grid item xs={12}>
+							 <label className="lblAddress">Event Date</label>
+							<DatePicker label="Event Date:" selected={date} onChange={date => setDate(date)} />
+						</Grid>
 							<Grid item xs={12}>
 							 <label className="lblAddress">Address</label>
 							  <MapboxAutocomplete
@@ -149,6 +160,19 @@ export default function Event_Edit() {
 								name="activity"
 								autoComplete="activity"
 								value={formData.activity}
+								onChange={handleChange}
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								variant="outlined"
+								required
+								fullWidth
+								id="dogType"
+								label="Suitable For"
+								name="dogType"
+								autoComplete="dogType"
+								value={formData.dogType}
 								onChange={handleChange}
 							/>
 						</Grid>
