@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -12,23 +12,35 @@ import axiosInstance from "../Axios";
 import Link from '@material-ui/core/Link';
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMap from "./GoogleMap";
+import LoadingComponent from "./Loading";
 
 async function subscribe(event) {
     console.log(JSON.stringify(event));
+    let attendees = "";
+    if(event.attendees) {
+		let goingArray = event.attendees.split(',');
+		const index = goingArray.indexOf(localStorage.getItem('current_user'));
+		if (index > -1) {
+			goingArray.splice(index, 1);
+			attendees = goingArray.toString();
+			console.log(attendees);
+		} else {
+			goingArray.push(localStorage.getItem('current_user'))
+			attendees = goingArray.toString();
+		}
+	}else
+	{
+		attendees = localStorage.getItem('current_user');
+	}
+
     axiosInstance
-	    .put('events/' + event.id +'/',
-			{title: event.title,
-			activity: event.activity,
-			location: event.location,
-			lat: event.lat,
-			lon : event.lon,
-			eventDate: event.eventDate,
-			dogType: event.dogType,
-				attendees : event.attendees + ', ' + localStorage.getItem('current_user')
+	    .put('events/UpdateEvent/' + event.id +'/',
+			{
+				attendees : attendees ? attendees : ""
 			}
        ).then((res) => {
         	console.log("Success");
-      	//window.location.reload(false);
+      	window.location.reload(false);
     });
   }
 
@@ -47,12 +59,19 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+
 const PublicEvent_Details = (props) => {
 	const history = useHistory();
-	const { events, homeAddress } = props;
+	const { events, owners } = props;
 	const classes = useStyles();
-	console.log(events);
+	console.log("+++++++++++++++")
+	console.log(owners);
+
 	if (!events || events.length === 0) return <p>Can not find any Events, sorry</p>;
+
+	const MapLoading = LoadingComponent(GoogleMap);
+
+
 	return (
 		<React.Fragment>
 			<Container maxWidth="md" component="main">
@@ -114,7 +133,7 @@ const PublicEvent_Details = (props) => {
 					})}
 				</Grid>
 			</Container>
-			<GoogleMap events={events} />
+			<GoogleMap events={events}  owner ={owners} />
 		</React.Fragment>
 
 	);

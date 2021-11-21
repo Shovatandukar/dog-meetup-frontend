@@ -14,20 +14,24 @@ function PublicEvent() {
 	const [appState, setAppState] = useState({
 		loading: true,
 		events: null,
+		owner: null,
 	});
 
 	useEffect(() => {
 		axiosInstance.get('/events/').then((res) => {
 			const allEvents = res.data;
-			setAppState({loading: false, events: allEvents});
+			axiosInstance.get('/owners/filtered').then((res) => {
+			const profileData = res.data;
+			setAppState({loading: false, events: allEvents, owner: profileData});
 			console.log(res.data);
+			});
 		});
 	}, [setAppState]);
 	return (
 		<div className="App">
 			<NavProfile />
 			<h1>Events</h1>
-			<EventLoading isLoading={appState.loading} events={appState.events}/>
+			<EventLoading isLoading={appState.loading} events={appState.events} owners={appState.owner}/>
 		</div>
 	);
 }
