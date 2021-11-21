@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useRef, useState } from "react";
 import "./Register.css";
 import imgRegister from "../img/About.jpg";
 import MapboxAutocomplete from "react-mapbox-autocomplete";
@@ -6,11 +6,13 @@ import axiosInstance from "../Axios";
 import { useHistory } from 'react-router-dom';
 import TextField from "@material-ui/core/TextField";
 import validator from "validator";
+import emailjs from "emailjs-com";
 
 function Register() {
   const history = useHistory();
 
   async function registerUser(userDetails) {
+     console.log(form.current);
     console.log(JSON.stringify(userDetails));
         await fetch("https://dog-meetup-shova.herokuapp.com/api/v1/auth/register/", {
         method: "POST",
@@ -19,9 +21,15 @@ function Register() {
         'Content-Type': 'application/json',
         accept: 'application/json',
     },
-      })
-    //axiosInstance
-     //   .post('auth/register/', JSON.stringify(userDetails)
+      }).then(() =>{
+        emailjs
+            .send(
+        "service_a39ikyl",
+        "template_kwnqqw6",
+        userDetails,
+        "user_uQBgnEafnOQdUzPxQrpGd"
+          )
+        })
      .then((res) => {
       history.push('./login')
 
@@ -29,6 +37,7 @@ function Register() {
   };
 
   //local state
+  const form = useRef();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -83,7 +92,7 @@ function Register() {
           <img src={imgRegister} alt="" />
         </div>
         <div className="register__container--right">
-          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+          <form noValidate autoComplete="off" ref={form} onSubmit={handleSubmit}>
             <h3>Create Account</h3>
             <div className="ownerDetails">
               <h4>Owner Details</h4>
@@ -93,6 +102,7 @@ function Register() {
                 fullWidth
                 helperText={usernameErrorMessage}
                 label="Username"
+                value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
                 type="text"

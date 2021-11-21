@@ -70,7 +70,7 @@ const PublicEvent_Details = (props) => {
 
 					{events.results.map((event) => {
 						return (
-							<Grid item key={event.id} xs={12} md={4}>
+							<Grid item key={event.id} xs={12} md={6}>
 								<Card className={classes.card}>
 									<CardMedia
 										className={classes.cardMedia}
@@ -115,8 +115,12 @@ const PublicEvent_Details = (props) => {
 											<Typography color="textSecondary">
 												Attendees:  {event.attendees }
 											</Typography>
+												<div className="googleMap">
+											<GoogleMap events={event}  owner ={owners} />
 										</div>
 										</div>
+										</div>
+
 									</CardContent>
 								</Card>
 							</Grid>
@@ -124,7 +128,6 @@ const PublicEvent_Details = (props) => {
 					})}
 				</Grid>
 			</Container>
-			<GoogleMap events={events}  owner ={owners} />
 		</React.Fragment>
 
 	);

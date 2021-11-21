@@ -4,8 +4,8 @@ import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import axiosInstance from "../Axios";
 
 const customizeMap = {
-  width: '100%',
-  height: '100%'
+  width: '26%',
+  height: '30%'
 };
 let eventList = "";
 let ownerLocation = "";
@@ -25,12 +25,11 @@ export class GoogleMap extends Component {
 
 
   drawMarker = () => {
-      return eventList.results.map((park, i) => {
-          return <Marker key={i} id={i} color={'white'} title={ 'Event: ' + park.title + ' Organizer: ' + park.creator } label={'Event: ' + park.title} position={{
-              lat: park.lat,
-              lng: park.lon
-          }} onClick={() => console.log("Event Hanlder Called")}/>
-      });
+          return <Marker key={1} id={1} color={'white'} title={ 'Event: ' + eventList.title + ' Organizer: ' + eventList.creator } label={'Event: ' + eventList.title} position={{
+              lat: eventList.lat,
+              lng: eventList.lon
+          }} onClick={() => console.log("Event Hanlder Called")}/>;
+
   }
 
   render() {
