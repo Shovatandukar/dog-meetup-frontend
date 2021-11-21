@@ -12,16 +12,26 @@ export default function Login() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    axiosInstance
-        .post('auth/token/', {username,password}
-        ).then((res) => {
-          console.log(res.data);
+
+    axiosInstance.post('auth/token/', {username,password}
+        ).then(res => {
+        if (res.status === 200) {
+            console.log(res.data);
           localStorage.setItem('access_token',res.data.access);
           localStorage.setItem('refresh_token',res.data.refresh);
           localStorage.setItem('current_user',username);
           axiosInstance.defaults.headers['Authorization'] = 'Bearer' + localStorage.getItem('access_token');
           history.push('/')
-      window.location.reload(false);
+            window.location.reload(false);
+        }
+        else {
+            // throw error and go to catch block
+            throw new Error("Error");
+        }
+    }).catch(error => {
+        //when throw "Error" is executed it runs the catch block code
+        console.log(error)
+        alert("Invalid Login Details")
     });
   }
 
