@@ -166,6 +166,16 @@ export default function Event_Create() {
 					>
 						Create Event
 					</Button>
+					<Button
+						type="submit"
+						fullWidth
+						variant="contained"
+						color="primary"
+						className={classes.submit}
+						href={'/Event'}
+					>
+						Cancel
+					</Button>
 				</form>
 			</div>
 		</Container>

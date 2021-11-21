@@ -223,6 +223,16 @@ export default function Profile_Edit() {
 					>
 						Update Profile
 					</Button>
+					<Button
+						type="submit"
+						fullWidth
+						variant="contained"
+						color="primary"
+						className={classes.submit}
+						href={'/Profile'}
+					>
+						Cancel
+					</Button>
 				</form>
 			</div>
 		</Container>

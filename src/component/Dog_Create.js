@@ -131,6 +131,16 @@ export default function Dog_Create() {
 					>
 						Create Dog
 					</Button>
+					<Button
+						type="submit"
+						fullWidth
+						variant="contained"
+						color="primary"
+						className={classes.submit}
+						href={'/Dog'}
+					>
+						Cancel
+					</Button>
 				</form>
 			</div>
 		</Container>
