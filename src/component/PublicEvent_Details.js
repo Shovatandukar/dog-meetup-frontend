@@ -62,7 +62,6 @@ const PublicEvent_Details = (props) => {
 
 	const MapLoading = LoadingComponent(GoogleMap);
 
-
 	return (
 		<React.Fragment>
 			<Container maxWidth="md" component="main">
@@ -97,12 +96,12 @@ const PublicEvent_Details = (props) => {
 										</div>
 										<div>
 											<Typography color="textSecondary">
-												location:  {event.location}
+												Location:  {event.location}
 											</Typography>
 										</div>
 										<div>
 											<Typography color="textSecondary">
-												location:  {event.eventDate}
+												Date:  {event.eventDate}
 											</Typography>
 										</div>
 

@@ -76,7 +76,7 @@ export default function Event_Create() {
 			location: address,
 			lat: lat,
 			lon : lng,
-			datetime: date,
+			eventDate: date,
 			dogType: formData.dogType,
 		}).then(
         (result) => {
