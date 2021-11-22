@@ -13,6 +13,7 @@ import Link from '@material-ui/core/Link';
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMap from "./GoogleMap";
 import LoadingComponent from "./Loading";
+import SearchBar from './Search';
 
 async function subscribe(event) {
     console.log(JSON.stringify(event));
@@ -55,13 +56,11 @@ const PublicEvent_Details = (props) => {
 	const history = useHistory();
 	const { events, owners } = props;
 	const classes = useStyles();
-	console.log("+++++++++++++++")
-	console.log(owners);
+
 
 	if (!events || events.length === 0) return <p>Can not find any Events, sorry</p>;
 
 	const MapLoading = LoadingComponent(GoogleMap);
-
 	return (
 		<React.Fragment>
 			<Container maxWidth="md" component="main">

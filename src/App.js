@@ -24,6 +24,8 @@ import Profile_Edit from "./component/Profile_Edit"
 import LogOut from "./component/LogOut"
 import Footer from "./component/Footer"
 import PublicEvents from "./component/PublicEvents";
+import SearchBar from "./component/SearchBar";
+import Search from "./component/Search";
 import './App.css'
 
 export default function App() {
@@ -75,6 +77,12 @@ export default function App() {
           </Route>
            <Route path="/PublicEvents">
             <PublicEvents />
+          </Route>
+           <Route path="/SearchBar">
+            <SearchBar />
+          </Route>
+          <Route path="/Search/:id">
+            <Search />
           </Route>
           <Route path="/">
             <Home />

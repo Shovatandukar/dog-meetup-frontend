@@ -18,6 +18,7 @@ export default function NavProfile() {
             <Button href="/dog">My Dogs</Button>
              <Button href="/Event">My Events</Button>
              <Button href="/PublicEvents">Join Events</Button>
+            <Button href="/SearchBar">Search Events</Button>
              <Button href="/LogOut">Log Out</Button>
       </ButtonGroup>
     </Box>
